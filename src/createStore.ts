@@ -1,8 +1,8 @@
 import { createReducerFun } from "./createReduce";
-import { dispatch } from "./dispatch";
+import { createDispatch } from "./dispatch";
 import setProxy from "./proxy";
 import { replaceReducer } from "./replaceReducer";
-import { AnyObj } from "./types/listener_type";
+import { AnyObj, DispatchFun, Middleware } from "./types/listener_type";
 export const Config = {
     isDispatching: false,
     ReducerDefault: "default",
@@ -17,6 +17,7 @@ export function createStore<T extends AnyObj>(
     state: T,
     options?: {
         defaultKeyIndex: 0;
+        enhancerDispatch: (dispatch: DispatchFun<T>) => DispatchFun<T>;
     }
 ) {
     if (Config.isMount) {
@@ -83,7 +84,7 @@ export function createStore<T extends AnyObj>(
     return {
         subscribe,
         getStateCut,
-        dispatch: dispatch<T>(),
+        dispatch: createDispatch<T>(options.enhancerDispatch),
         createReducer: createReducerFun<T, keyof T>(),
         replaceReducer: replaceReducer<T, keyof T>(),
     };

@@ -1,4 +1,5 @@
 import { createStore } from "./src/createStore";
+import applyMiddleware from "./src/applyMiddleware";
 import warning from "./src/types/listener_type";
 if (process.env.NODE_ENV !== "production") {
     warning(
@@ -6,4 +7,5 @@ if (process.env.NODE_ENV !== "production") {
     );
 }
 window["create"] = createStore;
+window["applyMiddleware"] = applyMiddleware;
 export { createStore };

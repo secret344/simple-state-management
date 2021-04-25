@@ -20,3 +20,14 @@ export default function warning(message: string): void {
         throw new Error(message);
     } catch (e) {} // eslint-disable-line no-empty
 }
+
+export type DispatchFun<T> = (
+    action: Action,
+    storeKey?: keyof T
+) => Action<any, any>;
+
+export type MiddlewareFun<T> = (
+    next: DispatchFun<T>
+) => (action: Action, storeKey?: keyof T) => any;
+
+export type Middleware<T> = { [key in keyof T]: Array<MiddlewareFun<T>> };

@@ -30,7 +30,17 @@
             }
         }
         let storeData = { count: 1 }
-        var store = window.create({ storeData })
+        var store = window.create({ storeData }, {
+            enhancerDispatch: window.applyMiddleware({
+                storeData: [(next) => (action, key) => {
+                    console.log("我是中间件1号");
+                    next(action, key)
+                }, (next) => (action, key) => {
+                    console.log("我是中间件2号");
+                    next(action, key)
+                }]
+            })
+        })
         store.createReducer(counter)
         var valueEl = document.getElementById('value')
 

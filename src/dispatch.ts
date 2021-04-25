@@ -1,8 +1,10 @@
 import { reducersMap } from "./createReduce";
 import { Config, store } from "./createStore";
-import warning, { Action } from "./types/listener_type";
-export function dispatch<T>() {
-    return function (action: Action, storeKey?: keyof T) {
+import warning, { Action, DispatchFun } from "./types/listener_type";
+export function createDispatch<T>(
+    enhancer?: (dispatch: DispatchFun<T>) => DispatchFun<T>
+) {
+    let dispatch = function (action: Action, storeKey?: keyof T) {
         if (Config.isDispatching) {
             throw new Error("Reducers may not dispatch actions.");
         }
@@ -34,7 +36,7 @@ export function dispatch<T>() {
                     "You must ensure that the Reducer returns the modified store"
                 );
             }
-            
+
             Config.isDispatching = false;
         } catch (rej) {
             throw new Error(rej);
@@ -44,6 +46,13 @@ export function dispatch<T>() {
 
         return action;
     };
+    if (typeof enhancer !== "undefined") {
+        if (typeof enhancer !== "function") {
+            throw new Error(`Expected the enhancer to be a function.`);
+        }
+        return enhancer(dispatch);
+    }
+    return dispatch;
 }
 
 export function emitListeners<T>(storeKey: T) {
