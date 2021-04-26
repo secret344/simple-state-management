@@ -1,10 +1,7 @@
 import { Config } from "./createStore";
-import warning, {
-    Action,
-    DispatchFun,
-    Middleware,
-} from "./types/listener_type";
+import { Action, DispatchFun, Middleware } from "./types/interface";
 import compose from "./utils/compose";
+import warning from "./utils/warning";
 
 export default function applyMiddleware<T>(middleware: Middleware<T>) {
     return function (dispatch: DispatchFun<T>): DispatchFun<T> {
@@ -29,6 +26,7 @@ export default function applyMiddleware<T>(middleware: Middleware<T>) {
         dispatch = (action: Action, storeKey?: keyof T) => {
             let key = storeKey || (Config.ReducerDefault as keyof T);
             let patch = middle[key];
+
             if (typeof patch === "function") {
                 return patch(fun)(action, key);
             }

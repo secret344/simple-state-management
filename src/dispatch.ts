@@ -1,10 +1,12 @@
-import { reducersMap } from "./createReduce";
 import { Config, store } from "./createStore";
-import warning, { Action, DispatchFun } from "./types/listener_type";
-export function createDispatch<T>(
+import { AnyAction, DispatchFun } from "./types/interface";
+import { isFunctionFn } from "./utils";
+import warning from "./utils/warning";
+function createDispatch<T>(
+    reducersMap: Map<any, any>,
     enhancer?: (dispatch: DispatchFun<T>) => DispatchFun<T>
 ) {
-    let dispatch = function (action: Action, storeKey?: keyof T) {
+    let dispatch = function (action: AnyAction, storeKey?: keyof T) {
         if (Config.isDispatching) {
             throw new Error("Reducers may not dispatch actions.");
         }
@@ -16,20 +18,26 @@ export function createDispatch<T>(
                 "You must call Dispatch after setting the Reducers"
             );
         }
+
         let currentState = store.currentState[key];
 
         try {
-            let state;
+            let state = currentState;
             Config.isDispatching = true;
             if (Array.isArray(currentReducers)) {
-                state = currentReducers.map((item) =>
-                    item(currentState as T, action)
-                );
+                currentReducers.forEach((item) => {
+                    let s = item(currentState as T, action);
+                    if (typeof s === "object") {
+                        state = Object.assign(state, s);
+                    } else {
+                        state = s;
+                    }
+                });
             } else {
                 state = currentReducers(currentState as T, action);
             }
 
-            if (typeof state !== "undefined") {
+            if (typeof state !== "undefined" && !isFunctionFn(state)) {
                 store.currentState[key] = state;
             } else if (process.env.NODE_ENV !== "production") {
                 warning(
@@ -55,10 +63,12 @@ export function createDispatch<T>(
     return dispatch;
 }
 
-export function emitListeners<T>(storeKey: T) {
+function emitListeners<T>(storeKey: T) {
     const listeners = store.nextListeners.get(storeKey) || [];
     for (let i = 0; i < listeners.length; i++) {
         const listener = listeners[i];
         listener();
     }
 }
+
+export default createDispatch;

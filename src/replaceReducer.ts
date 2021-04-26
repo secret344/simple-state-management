@@ -1,13 +1,18 @@
-import { reducersMap } from "./createReduce";
 import { Config } from "./createStore";
-import { ReducerFun } from "./types/listener_type";
+import { ReducerFun } from "./types/interface";
+import { isFunctionFn } from "./utils";
 
-export function replaceReducer<T, F extends keyof T>() {
+export default function replaceReducer<T, F extends keyof T>(
+    reducersMap: Map<any, any>
+) {
     return function (
         reducerFun: ReducerFun<T, F>,
         newReducerFun: ReducerFun<T, F>,
         storeKey?: F
     ) {
+        if (!isFunctionFn(newReducerFun)) {
+            throw new Error("Expected the nextReducer to be a function.");
+        }
         let key = storeKey || Config.ReducerDefault;
         let reducers = reducersMap.get(key);
         if (!reducers) {
@@ -31,6 +36,7 @@ export function replaceReducer<T, F extends keyof T>() {
             }
             reducersMap.set(key, reducers);
         }
+
         if (!isReplace) {
             throw new Error("The reducer to be replaced was not found");
         }

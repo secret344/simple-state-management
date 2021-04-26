@@ -1,26 +1,29 @@
 import { Config } from "./createStore";
-import warning, { ReducerFunObj, ReducerFun } from "./types/listener_type";
+import { ReducerFunObj, ReducerFun } from "./types/interface";
+import warning from "./utils/warning";
 
-export const reducersMap = new Map();
+export default function createReducerFun<T>() {
+    const reducersMap = new Map();
 
-export function createReducerFun<T, F extends keyof T>() {
-    function createReducer(reducerFun: ReducerFunObj<T, F>);
-    function createReducer(
-        reducerFun: ReducerFun<T, F> | Array<ReducerFun<T, F>>,
-        storeKey: F
+    function createReducer<K extends keyof T>(
+        reducerFun: ReducerFun<T, K> | ReducerFunObj<T, K>
     );
-    function createReducer(
+    function createReducer<K extends keyof T>(
+        reducerFun: ReducerFun<T, K> | Array<ReducerFun<T, K>>,
+        storeKey: K
+    );
+    function createReducer<K extends keyof T>(
         reducerFun:
-            | ReducerFunObj<T, F>
-            | ReducerFun<T, F>
-            | Array<ReducerFun<T, F>>,
-        storeKey?: F
+            | ReducerFunObj<T, K>
+            | ReducerFun<T, K>
+            | Array<ReducerFun<T, K>>,
+        storeKey?: K
     ) {
         let currentReducer:
-            | ReducerFunObj<T, F>
-            | Array<ReducerFun<T, F>>
-            | ReducerFun<T, F>
-            | ReducerFun<T, F>[] = reducerFun;
+            | ReducerFunObj<T, K>
+            | Array<ReducerFun<T, K>>
+            | ReducerFun<T, K>
+            | ReducerFun<T, K>[] = reducerFun;
 
         if (!!storeKey) {
             return setReducerMap(storeKey as string);
@@ -30,7 +33,7 @@ export function createReducerFun<T, F extends keyof T>() {
             return setReducerMap(Config.ReducerDefault);
         }
 
-        if (typeof reducerFun === "object") {
+        if (typeof reducerFun === "object" && reducerFun !== null) {
             for (const key in reducerFun) {
                 if (Object.prototype.hasOwnProperty.call(reducerFun, key)) {
                     const s = reducerFun[key];
@@ -74,5 +77,5 @@ export function createReducerFun<T, F extends keyof T>() {
             reducersMap.set(key, currentReducer);
         }
     }
-    return createReducer;
+    return { createReducer, reducersMap };
 }

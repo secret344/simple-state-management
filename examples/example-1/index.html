@@ -30,10 +30,10 @@
             }
         }
         let storeData = { count: 1 }
-        var store = window.create({ storeData }, {
+        let store = window.create({ storeData }, {
             enhancerDispatch: window.applyMiddleware({
                 storeData: [(next) => (action, key) => {
-                    console.log("我是中间件1号");
+                    console.log("我是中间件1号", store.getStateCut(), storeData);
                     next(action, key)
                 }, (next) => (action, key) => {
                     console.log("我是中间件2号");
