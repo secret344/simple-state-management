@@ -1,18 +1,22 @@
 export type AnyStore = { [key in string]: any };
-export interface Action<T = any> {
-    type: T;
+export interface Action<K = any> {
+    type: K;
 }
 export interface AnyAction extends Action {
     [key: string]: any;
 }
 
 export type ReducerFunObj<T, K extends keyof T> = {
-    [P in K]?: Array<ReducerFun<T, P>>;
+    [P in K]?: Array<ReducerFun<T, T[P]>>;
 };
-export type ReducerFun<T, K extends keyof T, A extends Action = AnyAction> = (
-    state: T[K],
-    action: A
-) => T[keyof T];
+
+export type ReducerFun<
+    T,
+    K extends T[keyof T],
+    A extends Action = AnyAction
+> = {
+    (state: K, action: A): K;
+};
 
 export type DispatchFun<T, A extends Action = AnyAction> = (
     action: Action,

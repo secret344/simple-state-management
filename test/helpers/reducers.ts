@@ -37,10 +37,9 @@ export interface TodoReducerStoreAction {
     text?: string;
 }
 export function createReducerTest(
-    state: ReducerOneStore | number,
+    state: ReducerOneStore,
     action: TodoReducerStoreAction
 ) {
-    state = state as ReducerOneStore;
     switch (action.type) {
         case CHANGE_TEXT:
             state.x = action.text;
@@ -54,10 +53,9 @@ export interface TodoReducerStoreActionNumber {
     num?: 123;
 }
 export function createReducerTestNumber(
-    state: ReducerOneStore | number,
+    state: number,
     action: TodoReducerStoreActionNumber
 ) {
-    state = state as number;
     switch (action.type) {
         case CHANGE_NUM:
             state += action.num;

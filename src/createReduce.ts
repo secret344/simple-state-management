@@ -6,24 +6,24 @@ export default function createReducerFun<T>() {
     const reducersMap = new Map();
 
     function createReducer<K extends keyof T>(
-        reducerFun: ReducerFun<T, K> | ReducerFunObj<T, K>
+        reducerFun: ReducerFun<T, T[K]> | ReducerFunObj<T, K>
     );
     function createReducer<K extends keyof T>(
-        reducerFun: ReducerFun<T, K> | Array<ReducerFun<T, K>>,
+        reducerFun: ReducerFun<T, T[K]> | Array<ReducerFun<T, T[K]>>,
         storeKey: K
     );
     function createReducer<K extends keyof T>(
         reducerFun:
             | ReducerFunObj<T, K>
-            | ReducerFun<T, K>
-            | Array<ReducerFun<T, K>>,
+            | ReducerFun<T, T[K]>
+            | Array<ReducerFun<T, T[K]>>,
         storeKey?: K
     ) {
         let currentReducer:
             | ReducerFunObj<T, K>
-            | Array<ReducerFun<T, K>>
-            | ReducerFun<T, K>
-            | ReducerFun<T, K>[] = reducerFun;
+            | Array<ReducerFun<T, T[K]>>
+            | ReducerFun<T, T[K]>
+            | ReducerFun<T, T[K]>[] = reducerFun;
 
         if (!!storeKey) {
             return setReducerMap(storeKey as string);

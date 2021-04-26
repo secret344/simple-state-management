@@ -13,9 +13,9 @@ describe("createReducer", () => {
         expect(store.getStateCut()).toEqual({ x: "world" });
         expect(store.getStateCut("a")).toEqual({ x: "world" });
 
-        expect(() =>
-            store.createReducer(createReducerTestNumber as any)
-        ).toThrowError("You cannot set the Reducer repeatedly");
+        expect(() => store.createReducer(createReducerTestNumber)).toThrowError(
+            "You cannot set the Reducer repeatedly"
+        );
     });
     it("reducer is array", () => {
         let create = new moreCreateStore();
@@ -27,9 +27,9 @@ describe("createReducer", () => {
         expect(store.getStateCut()).toEqual({ x: "world" });
         expect(store.getStateCut("a")).toEqual({ x: "world" });
 
-        expect(() =>
-            store.createReducer(createReducerTestNumber as any)
-        ).toThrowError("You cannot set the Reducer repeatedly");
+        expect(() => store.createReducer(createReducerTestNumber)).toThrowError(
+            "You cannot set the Reducer repeatedly"
+        );
 
         store.createReducer([createReducerTestNumber], "b");
     });
