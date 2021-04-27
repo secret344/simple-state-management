@@ -1,6 +1,6 @@
+import { createStore } from "../src";
 import replaceReducer from "../src/replaceReducer";
 import { changeText } from "./helpers/actionCreators";
-import { moreCreateStore } from "./helpers/morecreatestore";
 import {
     createReducerTest,
     createReducerTestNotReturn,
@@ -17,14 +17,13 @@ describe("replaceReducer", () => {
         );
     });
     it("no store", () => {
-        let r = replaceReducer(new Map());
-        expect(() => r(1 as any, replaceTodosReverse as any)).toThrowError(
-            "You must specify a store."
-        );
+        const store = createStore(reducerStore, { defaultKeyIndex: 3 });
+        expect(() =>
+            store.replaceReducer(1 as any, replaceTodosReverse as any)
+        ).toThrowError("You must specify a store.");
     });
     it("When the reducer is the array is the replacement", () => {
-        let create = new moreCreateStore();
-        const store = create.createStore(reducerStore, { defaultKeyIndex: 3 });
+        const store = createStore(reducerStore, { defaultKeyIndex: 3 });
         store.createReducer([createReducerTest], "a");
         store.replaceReducer(createReducerTest, replaceReducerTest, "a");
         store.dispatch(changeText("world"));
@@ -33,8 +32,7 @@ describe("replaceReducer", () => {
         });
     });
     it("When the reducer is the array is the replacement", () => {
-        let create = new moreCreateStore();
-        const store = create.createStore(reducerStore, { defaultKeyIndex: 3 });
+        const store = createStore(reducerStore, { defaultKeyIndex: 3 });
         store.createReducer([createReducerTest], "a");
         expect(() =>
             store.replaceReducer(

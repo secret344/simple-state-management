@@ -3,6 +3,7 @@ import { AnyAction, DispatchFun } from "./types/interface";
 import { isFunctionFn } from "./utils";
 import warning from "./utils/warning";
 function createDispatch<T>(
+    _this: any,
     reducersMap: Map<any, any>,
     enhancer?: (dispatch: DispatchFun<T>) => DispatchFun<T>
 ) {
@@ -13,17 +14,17 @@ function createDispatch<T>(
         if (Config.isDispatching) {
             throw new Error("Reducers may not dispatch actions.");
         }
-        let key = storeKey || this.ReducerDefault;
+        let key = storeKey || _this.ReducerDefault;
 
         let currentReducers = reducersMap.get(key);
-        
+
         if (!currentReducers) {
             throw new Error(
                 "You must call Dispatch after setting the Reducers"
             );
         }
 
-        let currentState = this.currentState[key];
+        let currentState = _this.currentState[key];
 
         try {
             let state = currentState;
@@ -42,7 +43,7 @@ function createDispatch<T>(
             }
 
             if (typeof state !== "undefined" && !isFunctionFn(state)) {
-                this.currentState[key] = state;
+                _this.currentState[key] = state;
             } else if (process.env.NODE_ENV !== "production") {
                 warning(
                     "You must ensure that the Reducer returns the modified store"
@@ -52,7 +53,7 @@ function createDispatch<T>(
             throw new Error(rej);
         } finally {
             Config.isDispatching = false;
-            emitListeners.call(this, key);
+            emitListeners.call(_this, key);
         }
 
         return action;
@@ -61,7 +62,7 @@ function createDispatch<T>(
         if (typeof enhancer !== "function") {
             throw new Error(`Expected the enhancer to be a function.`);
         }
-        return enhancer(dispatch.bind(this));
+        return enhancer(dispatch);
     }
     return dispatch;
 }

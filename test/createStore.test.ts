@@ -9,7 +9,6 @@ import { createStore } from "../src";
 import applyMiddleware from "../src/applyMiddleware";
 import { modeMiddleware } from "./helpers/middleware";
 import { AnyStore } from "../src/types/interface";
-import { moreCreateStore } from "./helpers/morecreatestore";
 import {
     addnum,
     addnumReturnNewState,
@@ -167,7 +166,9 @@ describe("createStore", () => {
             { enhancerDispatch: applyMiddleware(modeMiddleware()) }
         );
         store.createReducer(todosReverse);
-        expect(() => store.dispatch({ type: ERROR })).toThrow("ERROR");
+        expect(() =>
+            store.dispatch({ type: ERROR }, "enhancerDispatchStoreNumData")
+        ).toThrow("ERROR");
         store.dispatch(addnum(1));
         expect(store.getStateCut()).toEqual({ num: 1 });
         expect(store.getStateCut("enhancerDispatchStoreNumData")).toEqual({

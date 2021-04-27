@@ -90,10 +90,11 @@ export function createStore<T extends AnyStore>(
         subscribe: subscribe.bind(this),
         getStateCut: getStateCut.bind(this),
         dispatch: createDispatch<T>(
+            this,
             createReducer.reducersMap,
             options && options.enhancerDispatch
-        ).bind(this),
+        ),
         createReducer: createReducer.createReducer.bind(this),
-        replaceReducer: replaceReducer<T>(createReducer.reducersMap),
+        replaceReducer: replaceReducer<T>(createReducer.reducersMap).bind(this),
     };
 }
