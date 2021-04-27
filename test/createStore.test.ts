@@ -5,7 +5,7 @@ import {
     enhancerDispatchStoreNumData,
     reducerStore,
 } from "./helpers/store";
-import { createStore } from "../src/createStore";
+import { createStore } from "../src";
 import applyMiddleware from "../src/applyMiddleware";
 import { modeMiddleware } from "./helpers/middleware";
 import { AnyStore } from "../src/types/interface";
@@ -44,20 +44,14 @@ describe("createStore", () => {
         expect(methods).toContain("createReducer");
         expect(methods).toContain("replaceReducer");
     });
-    it("many times to create", () => {
-        expect(() => createStore({ storeData })).toThrowError(
-            "You cannot create a repository multiple times"
-        );
-    });
+
     it("passes the initial state", () => {
-        let create = new moreCreateStore();
-        const store = create.createStore({ storeData });
+        const store = createStore({ storeData });
         expect(store.getStateCut()).toEqual({});
     });
 
     it("applies the reducer to the previous state", () => {
-        let create = new moreCreateStore();
-        const store = create.createStore({ storeNumData });
+        const store = createStore({ storeNumData });
         expect(store.getStateCut()).toEqual({ num: 0 });
         expect(store.getStateCut("storeNumData")).toEqual({ num: 0 });
         store.createReducer(todosReverse);
@@ -72,8 +66,7 @@ describe("createStore", () => {
     });
 
     it("supports multiple subscriptions", () => {
-        let create = new moreCreateStore();
-        const store = create.createStore({ storeData });
+        const store = createStore({ storeData });
         store.createReducer(todosReverse);
 
         const listenerA = jest.fn();
@@ -120,8 +113,7 @@ describe("createStore", () => {
         expect(listenerB.mock.calls.length).toBe(2);
     });
     it("supports multiple subscriptions", () => {
-        let create = new moreCreateStore();
-        const store = create.createStore({ storeData });
+        const store = createStore({ storeData });
         store.createReducer(todosReverse);
 
         const listenerA = jest.fn();
@@ -170,8 +162,7 @@ describe("createStore", () => {
     });
 
     it("options enhancerDispatch", () => {
-        let create = new moreCreateStore();
-        const store = create.createStore(
+        const store = createStore(
             { enhancerDispatchStoreNumData },
             { enhancerDispatch: applyMiddleware(modeMiddleware()) }
         );
@@ -184,8 +175,7 @@ describe("createStore", () => {
         });
     });
     it("replaceReducers test", () => {
-        let create = new moreCreateStore();
-        const store = create.createStore({ replaceStoreNumData });
+        const store = createStore({ replaceStoreNumData });
         expect(store.getStateCut()).toEqual({ num: 0 });
         expect(store.getStateCut("replaceStoreNumData")).toEqual({ num: 0 });
         store.createReducer(todosReverse);
@@ -208,8 +198,7 @@ describe("createStore", () => {
         expect(store.getStateCut("replaceStoreNumData")).toEqual({ num: 0 });
     });
     it("throws if replaceReducer is not a function", () => {
-        let create = new moreCreateStore();
-        const store = create.createStore({ num: 1 });
+        const store = createStore({ num: 1 });
         store.createReducer(todosReverse);
 
         expect(() => store.replaceReducer(undefined, undefined)).toThrow(
@@ -217,8 +206,7 @@ describe("createStore", () => {
         );
     });
     it("throws if listener is not a function", () => {
-        let create = new moreCreateStore();
-        const store = create.createStore({ b: 1 });
+        const store = createStore({ b: 1 });
 
         expect(() => store.subscribe(undefined)).toThrow();
 
@@ -229,8 +217,7 @@ describe("createStore", () => {
         expect(() => store.subscribe(undefined)).toThrow();
     });
     it("DefaultKeyIndex exceeds the number of stores", () => {
-        let create = new moreCreateStore();
-        const store = create.createStore(reducerStore, { defaultKeyIndex: 3 });
+        const store = createStore(reducerStore, { defaultKeyIndex: 3 });
         store.createReducer(createReducerTest);
         store.dispatch(changeText("world"));
         expect(store.getStateCut()).toEqual({
@@ -238,9 +225,8 @@ describe("createStore", () => {
         });
     });
     it("DefaultKeyIndex exceeds the number of stores", () => {
-        let create = new moreCreateStore();
         const listenerA = jest.fn();
-        const store = create.createStore(reducerStore, { defaultKeyIndex: 3 });
+        const store = createStore(reducerStore, { defaultKeyIndex: 3 });
         let unsubscribeA = store.subscribe(listenerA);
         store.createReducer((action: any, key?: any) => {
             unsubscribeA();

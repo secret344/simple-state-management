@@ -1,4 +1,5 @@
-import { createStore } from "../../src/createStore";
+import { createStore } from "../../src";
+
 export class moreCreateStore {
     constructor() {
         //..

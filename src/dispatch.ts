@@ -1,4 +1,4 @@
-import { Config, store } from "./createStore";
+import { Config } from "./createStore";
 import { AnyAction, DispatchFun } from "./types/interface";
 import { isFunctionFn } from "./utils";
 import warning from "./utils/warning";
@@ -13,17 +13,17 @@ function createDispatch<T>(
         if (Config.isDispatching) {
             throw new Error("Reducers may not dispatch actions.");
         }
-        let key = storeKey || Config.ReducerDefault;
+        let key = storeKey || this.ReducerDefault;
 
         let currentReducers = reducersMap.get(key);
-
+        
         if (!currentReducers) {
             throw new Error(
                 "You must call Dispatch after setting the Reducers"
             );
         }
 
-        let currentState = store.currentState[key];
+        let currentState = this.currentState[key];
 
         try {
             let state = currentState;
@@ -42,7 +42,7 @@ function createDispatch<T>(
             }
 
             if (typeof state !== "undefined" && !isFunctionFn(state)) {
-                store.currentState[key] = state;
+                this.currentState[key] = state;
             } else if (process.env.NODE_ENV !== "production") {
                 warning(
                     "You must ensure that the Reducer returns the modified store"
@@ -52,7 +52,7 @@ function createDispatch<T>(
             throw new Error(rej);
         } finally {
             Config.isDispatching = false;
-            emitListeners(key);
+            emitListeners.call(this, key);
         }
 
         return action;
@@ -61,13 +61,13 @@ function createDispatch<T>(
         if (typeof enhancer !== "function") {
             throw new Error(`Expected the enhancer to be a function.`);
         }
-        return enhancer(dispatch);
+        return enhancer(dispatch.bind(this));
     }
     return dispatch;
 }
 
 function emitListeners<T>(storeKey: T) {
-    const listeners = store.nextListeners.get(storeKey) || [];
+    const listeners = this.nextListeners.get(storeKey) || [];
     for (let i = 0; i < listeners.length; i++) {
         const listener = listeners[i];
         listener();

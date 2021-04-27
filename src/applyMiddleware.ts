@@ -27,13 +27,13 @@ export default function applyMiddleware<T>(middleware: Middleware<T>) {
         }
 
         dispatch = (action: Action, storeKey?: keyof T) => {
-            let key = storeKey || (Config.ReducerDefault as keyof T);
+            let key = storeKey || (this.ReducerDefault as keyof T);
             let patch = middle[key];
             if (patch && typeof patch === "function") {
                 return patch(fun)(action, key);
             }
             return fun(action, storeKey);
         };
-        return dispatch;
+        return dispatch.bind(fun);
     };
 }

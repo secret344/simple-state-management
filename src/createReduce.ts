@@ -24,7 +24,7 @@ export default function createReducerFun<T>() {
         }
 
         if (typeof reducerFun === "function" || Array.isArray(reducerFun)) {
-            return setReducerMap(Config.ReducerDefault);
+            return setReducerMap(this.ReducerDefault);
         }
 
         if (typeof reducerFun === "object" && reducerFun !== null) {

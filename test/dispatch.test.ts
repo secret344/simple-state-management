@@ -1,4 +1,4 @@
-import { createStore } from "../src/createStore";
+import { createStore } from "../src";
 import { changeText } from "./helpers/actionCreators";
 import { moreCreateStore } from "./helpers/morecreatestore";
 import {

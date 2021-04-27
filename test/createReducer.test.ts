@@ -1,5 +1,5 @@
 import createReducerFun from "../src/createReduce";
-import { createStore } from "../src/createStore";
+import { createStore } from "../src";
 import { changeNum, changeText } from "./helpers/actionCreators";
 import { moreCreateStore } from "./helpers/morecreatestore";
 import { createReducerTest, createReducerTestNumber } from "./helpers/reducers";
