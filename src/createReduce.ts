@@ -1,4 +1,3 @@
-import { Config } from "./createStore";
 import { ReducerFunObj, ReducerFun } from "./types/interface";
 import warning from "./utils/warning";
 

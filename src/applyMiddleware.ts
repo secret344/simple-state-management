@@ -1,4 +1,3 @@
-import { Config } from "./createStore";
 import { Action, DispatchFun, Middleware } from "./types/interface";
 import compose from "./utils/compose";
 import warning from "./utils/warning";
@@ -9,7 +8,7 @@ export default function applyMiddleware<T>(middleware: Middleware<T>) {
         let middle: any = {};
         for (const key in middleware) {
             if (Object.prototype.hasOwnProperty.call(middleware, key)) {
-                // Not store state
+                // Not send store state
                 let mw = middleware[key];
                 if (!Array.isArray(mw)) {
                     mw = [mw];

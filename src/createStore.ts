@@ -5,9 +5,6 @@ import replaceReducer from "./replaceReducer";
 import { AnyStore, DispatchFun } from "./types/interface";
 import { isFunctionFn } from "./utils";
 
-export const Config = {
-    isDispatching: false,
-};
 export function createStore<T extends AnyStore>(
     state: T,
     options?: {
@@ -39,9 +36,10 @@ export function createStore<T extends AnyStore>(
     if (idx === 0) {
         throw new Error("There's no data. store:" + state);
     }
+    this.isDispatching = false;
     this.nextListeners = new Map();
     this.ReducerDefault = defaultKey;
-    this.currentState = setProxy(p) as T;
+    this.currentState = setProxy.call(this, p) as T;
     function subscribe(listener: () => void, key?: string) {
         if (!isFunctionFn(listener)) {
             throw new Error("Expected the listener to be a function.");
@@ -57,12 +55,12 @@ export function createStore<T extends AnyStore>(
             this.nextListeners.set(key, [listener]);
             stateListeners = nextListeners.get(key);
         }
-
+        let _this = this;
         return function unsubscribe() {
             if (!isSubscribed) {
                 return;
             }
-            if (Config.isDispatching) {
+            if (_this.isDispatching) {
                 throw new Error(
                     "You may not unsubscribe from a store listener while the reducer is executing."
                 );

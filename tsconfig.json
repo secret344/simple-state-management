@@ -13,7 +13,9 @@
         "resolveJsonModule": true,
         "isolatedModules": true,
         "noImplicitAny": false,
-        "noEmit": true
+        "noEmit": true,
+        "declaration": true,
+        "declarationDir": "./types"
     },
     "include": ["./src/**/*"]
 }

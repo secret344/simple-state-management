@@ -1,9 +1,8 @@
-import { Config } from "./createStore";
 import { AnyAction, DispatchFun } from "./types/interface";
 import { isFunctionFn } from "./utils";
 import warning from "./utils/warning";
 function createDispatch<T>(
-    _this: any,
+    _this,
     reducersMap: Map<any, any>,
     enhancer?: (dispatch: DispatchFun<T>) => DispatchFun<T>
 ) {
@@ -11,7 +10,7 @@ function createDispatch<T>(
         action: AnyAction,
         storeKey?: keyof T
     ) {
-        if (Config.isDispatching) {
+        if (_this.isDispatching) {
             throw new Error("Reducers may not dispatch actions.");
         }
         let key = storeKey || _this.ReducerDefault;
@@ -28,7 +27,7 @@ function createDispatch<T>(
 
         try {
             let state = currentState;
-            Config.isDispatching = true;
+            _this.isDispatching = true;
             if (Array.isArray(currentReducers)) {
                 currentReducers.forEach((item) => {
                     let s = item(currentState as T, action);
@@ -52,7 +51,7 @@ function createDispatch<T>(
         } catch (rej) {
             throw new Error(rej);
         } finally {
-            Config.isDispatching = false;
+            _this.isDispatching = false;
             emitListeners.call(_this, key);
         }
 

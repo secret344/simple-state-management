@@ -22,7 +22,24 @@ export default [
         ]),
         plugins: [
             nodeResolve({ extensions }),
-            typescript(),
+            typescript({ useTsconfigDeclarationDir: true }),
+            babel({
+                extensions,
+                exclude: "node_modules/**", // 只编译我们的源代码
+            }),
+        ],
+    },
+    // es
+    {
+        input: "src/index.ts",
+        output: { file: "es/SMU.js", format: "es", indent: false },
+        external: makeExternalPredicate([
+            ...Object.keys(pkg.dependencies || {}),
+            ...Object.keys(pkg.peerDependencies || {}),
+        ]),
+        plugins: [
+            nodeResolve({ extensions }),
+            typescript({ useTsconfigDeclarationDir: true }),
             babel({
                 extensions,
                 exclude: "node_modules/**", // 只编译我们的源代码
