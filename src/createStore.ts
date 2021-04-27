@@ -83,10 +83,10 @@ export function createStore<T extends AnyStore>(
     }
 
     function getStateCut<F extends keyof T>(key?: F): T[F] {
-        key = key || (Config.ReducerDefault as F);
+        let k = key || Config.ReducerDefault;
         let currentState = store.currentState;
-        if (key) {
-            currentState = currentState[key];
+        if (k) {
+            currentState = currentState[k];
         }
         if (typeof currentState === "undefined") {
             throw new Error("The key entered is invalid");
@@ -103,6 +103,6 @@ export function createStore<T extends AnyStore>(
             options && options.enhancerDispatch
         ),
         createReducer: createReducer.createReducer,
-        replaceReducer: replaceReducer<T, keyof T>(createReducer.reducersMap),
+        replaceReducer: replaceReducer<T>(createReducer.reducersMap),
     };
 }

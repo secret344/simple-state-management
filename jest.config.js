@@ -6,6 +6,6 @@ module.exports = {
         "**/*.{ts,tsx}",
         "!**/node_modules/**",
         "!**/helpers/**",
-        "!./index.ts",
+        "!**/src/index.ts",
     ],
 };

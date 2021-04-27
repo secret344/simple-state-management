@@ -9,7 +9,7 @@ import { ReducerOneStore } from "./store";
 export interface Todo {
     num: number;
 }
-export type TodoAction = { type: "ADD_NUM" | "ADD_NUM_RETURN"; num: number };
+export type TodoAction = { type: "ADD_NUM" | "ADD_NUM_RETURN"; num?: number };
 export function todosReverse(state: Todo, action: TodoAction) {
     switch (action.type) {
         case ADD_NUM:

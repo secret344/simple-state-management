@@ -27,3 +27,4 @@ export type MiddlewareFun<T, A extends Action = AnyAction> = (
 ) => (action: A, storeKey?: keyof T) => any;
 
 export type Middleware<T> = { [key in keyof T]: Array<MiddlewareFun<T>> };
+

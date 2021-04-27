@@ -25,8 +25,8 @@ describe("replaceReducer", () => {
     it("When the reducer is the array is the replacement", () => {
         let create = new moreCreateStore();
         const store = create.createStore(reducerStore, { defaultKeyIndex: 3 });
-        store.createReducer([createReducerTest]);
-        store.replaceReducer(createReducerTest, replaceReducerTest);
+        store.createReducer([createReducerTest], "a");
+        store.replaceReducer(createReducerTest, replaceReducerTest, "a");
         store.dispatch(changeText("world"));
         expect(store.getStateCut()).toEqual({
             x: "helloworld",
@@ -35,9 +35,13 @@ describe("replaceReducer", () => {
     it("When the reducer is the array is the replacement", () => {
         let create = new moreCreateStore();
         const store = create.createStore(reducerStore, { defaultKeyIndex: 3 });
-        store.createReducer([createReducerTest]);
+        store.createReducer([createReducerTest], "a");
         expect(() =>
-            store.replaceReducer(createReducerTestNotReturn, replaceReducerTest)
+            store.replaceReducer(
+                createReducerTestNotReturn as any,
+                replaceReducerTest,
+                "a"
+            )
         ).toThrowError("The reducer to be replaced was not found");
     });
 });

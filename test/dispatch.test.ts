@@ -45,7 +45,7 @@ describe("dispatch", () => {
         let create = new moreCreateStore();
         // 123
         const store = create.createStore(reducerStore, { defaultKeyIndex: 3 });
-        let state = store.getStateCut();
+        let state = store.getStateCut("a");
         expect(() => (state.x = "666")).toThrowError(
             "Do not modify the internal values of the repository externally."
         );
@@ -75,7 +75,7 @@ describe("dispatch", () => {
         let create = new moreCreateStore();
         expect(() =>
             create.createStore(reducerStore, {
-                enhancerDispatch: 123,
+                enhancerDispatch: 123 as any,
             })
         ).toThrowError("Expected the enhancer to be a function.");
     });

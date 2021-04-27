@@ -12,13 +12,7 @@ export default function createReducerFun<T>() {
         reducerFun: ReducerFun<T, T[K]> | Array<ReducerFun<T, T[K]>>,
         storeKey: K
     );
-    function createReducer<K extends keyof T>(
-        reducerFun:
-            | ReducerFunObj<T, K>
-            | ReducerFun<T, T[K]>
-            | Array<ReducerFun<T, T[K]>>,
-        storeKey?: K
-    ) {
+    function createReducer<K extends keyof T>(reducerFun, storeKey?) {
         let currentReducer:
             | ReducerFunObj<T, K>
             | Array<ReducerFun<T, T[K]>>

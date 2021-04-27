@@ -1,4 +1,8 @@
 import { createStore } from "../../src/createStore";
+export class moreCreateStore {
+    constructor() {
+        //..
+    }
 
-export function moreCreateStore() {}
-moreCreateStore.prototype.createStore = createStore;
+    createStore = createStore;
+}

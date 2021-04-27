@@ -2,13 +2,11 @@ import { Config } from "./createStore";
 import { ReducerFun } from "./types/interface";
 import { isFunctionFn } from "./utils";
 
-export default function replaceReducer<T, F extends keyof T>(
-    reducersMap: Map<any, any>
-) {
-    return function (
-        reducerFun: ReducerFun<T, T[F]>,
-        newReducerFun: ReducerFun<T, T[F]>,
-        storeKey?: F
+export default function replaceReducer<T>(reducersMap: Map<any, any>) {
+    return function <K extends keyof T>(
+        reducerFun: ReducerFun<T, T[K]>,
+        newReducerFun: ReducerFun<T, T[K]>,
+        storeKey?: K
     ) {
         if (!isFunctionFn(newReducerFun)) {
             throw new Error("Expected the nextReducer to be a function.");

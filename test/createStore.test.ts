@@ -212,7 +212,7 @@ describe("createStore", () => {
         const store = create.createStore({ num: 1 });
         store.createReducer(todosReverse);
 
-        expect(() => store.replaceReducer(undefined)).toThrow(
+        expect(() => store.replaceReducer(undefined, undefined)).toThrow(
             "Expected the nextReducer to be a function."
         );
     });
