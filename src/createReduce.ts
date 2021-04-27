@@ -25,11 +25,11 @@ export default function createReducerFun<T>() {
             | ReducerFun<T, T[K]>
             | ReducerFun<T, T[K]>[] = reducerFun;
 
-        if (!!storeKey) {
+        if (typeof storeKey !== "undefined" && typeof storeKey === "string") {
             return setReducerMap(storeKey as string);
         }
 
-        if (typeof reducerFun === "function") {
+        if (typeof reducerFun === "function" || Array.isArray(reducerFun)) {
             return setReducerMap(Config.ReducerDefault);
         }
 

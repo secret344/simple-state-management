@@ -18,10 +18,9 @@ export type ReducerFun<
     (state: K, action: A): K;
 };
 
-export type DispatchFun<T, A extends Action = AnyAction> = (
-    action: Action,
-    storeKey?: keyof T
-) => A;
+export type DispatchFun<T, A extends Action = AnyAction> = {
+    (action: Action, storeKey?: keyof T): A;
+};
 
 export type MiddlewareFun<T, A extends Action = AnyAction> = (
     next: DispatchFun<T>

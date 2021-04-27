@@ -3,13 +3,24 @@ import {
     storeNumData,
     replaceStoreNumData,
     enhancerDispatchStoreNumData,
+    reducerStore,
 } from "./helpers/store";
-import { createStore, applyMiddleware } from "..";
+import { createStore } from "../src/createStore";
+import applyMiddleware from "../src/applyMiddleware";
 import { modeMiddleware } from "./helpers/middleware";
 import { AnyStore } from "../src/types/interface";
 import { moreCreateStore } from "./helpers/morecreatestore";
-import { addnum, addnumReturnNewState, unknownAction } from "./helpers/actionCreators";
-import { replaceTodosReverse, todosReverse } from "./helpers/reducers";
+import {
+    addnum,
+    addnumReturnNewState,
+    changeText,
+    unknownAction,
+} from "./helpers/actionCreators";
+import {
+    createReducerTest,
+    replaceTodosReverse,
+    todosReverse,
+} from "./helpers/reducers";
 import { ERROR } from "./helpers/actionTypes";
 
 describe("createStore", () => {
@@ -141,6 +152,7 @@ describe("createStore", () => {
         expect(listenerB.mock.calls.length).toBe(2);
 
         unsubscribeB();
+        unsubscribeB();
         expect(listenerA.mock.calls.length).toBe(3);
         expect(listenerB.mock.calls.length).toBe(2);
 
@@ -215,5 +227,27 @@ describe("createStore", () => {
         expect(() => store.subscribe(null)).toThrow();
 
         expect(() => store.subscribe(undefined)).toThrow();
+    });
+    it("DefaultKeyIndex exceeds the number of stores", () => {
+        let create = new moreCreateStore();
+        const store = create.createStore(reducerStore, { defaultKeyIndex: 3 });
+        store.createReducer(createReducerTest);
+        store.dispatch(changeText("world"));
+        expect(store.getStateCut()).toEqual({
+            x: "world",
+        });
+    });
+    it("DefaultKeyIndex exceeds the number of stores", () => {
+        let create = new moreCreateStore();
+        const listenerA = jest.fn();
+        const store = create.createStore(reducerStore, { defaultKeyIndex: 3 });
+        let unsubscribeA = store.subscribe(listenerA);
+        store.createReducer((action: any, key?: any) => {
+            unsubscribeA();
+            createReducerTest(action, key);
+        });
+        expect(() => store.dispatch(changeText("world"))).toThrowError(
+            " You may not unsubscribe from a store listener while the reducer is executing."
+        );
     });
 });

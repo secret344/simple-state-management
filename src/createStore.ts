@@ -28,7 +28,7 @@ export function createStore<T extends AnyStore>(
         throw new Error("Store must be an object");
     }
 
-    let p: T = state;
+    let p: T = { ...state };
     let idx = 0;
     let defIndex = (options && options.defaultKeyIndex) || 0;
     let defaultKey = "";

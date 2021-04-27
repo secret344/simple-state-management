@@ -1,8 +1,9 @@
-import { createStore } from "..";
-import { addnum, changeNum, changeText } from "./helpers/actionCreators";
+import createReducerFun from "../src/createReduce";
+import { createStore } from "../src/createStore";
+import { changeNum, changeText } from "./helpers/actionCreators";
 import { moreCreateStore } from "./helpers/morecreatestore";
 import { createReducerTest, createReducerTestNumber } from "./helpers/reducers";
-import { reducerStore } from "./helpers/store";
+import { reducerStore, reducerStoreProto } from "./helpers/store";
 
 describe("createReducer", () => {
     it("reducer is function", () => {
@@ -55,30 +56,43 @@ describe("createReducer", () => {
             })
         ).toThrowError("You cannot set the Reducer repeatedly");
     });
-    it("reducer is Object", () => {
+
+    it("The reducer contains inherited attributes", () => {
         let create = new moreCreateStore();
 
-        const store = (create.createStore as typeof createStore)(reducerStore);
-        expect(
-            store.createReducer({
-                a: [createReducerTest, createReducerTest],
-                b: [createReducerTestNumber, createReducerTestNumber],
-            })
+        const store = (create.createStore as typeof createStore)(
+            reducerStoreProto()
         );
+        store.createReducer({
+            a: [createReducerTest],
+            b: [createReducerTestNumber],
+        });
 
-        store.dispatch(changeText("bbca"));
+        store.dispatch(changeText("world"));
         store.dispatch(changeNum(1), "b");
-        expect(store.getStateCut()).toEqual({ x: "bbca" });
-        expect(store.getStateCut("a")).toEqual({ x: "bbca" });
-        expect(store.getStateCut("b")).toEqual(125);
-
-        expect(() =>
-            store.createReducer({
-                a: [createReducerTest],
-                b: [createReducerTestNumber],
-            })
-        ).toThrowError("You cannot set the Reducer repeatedly");
+        expect(store.getStateCut()).toEqual({ x: "world" });
+        expect(store.getStateCut("a")).toEqual({ x: "world" });
+        expect(store.getStateCut("b")).toEqual(124);
+        expect(() => store.getStateCut("custome" as any)).toThrowError(
+            "The key entered is invalid"
+        );
     });
+
+    it("The reducer is set multiple times to the same", () => {
+        const preSpy = console.error;
+        const spy = jest.fn();
+        console.error = spy;
+        let c = createReducerFun();
+        c.createReducer({
+            a: [createReducerTest, createReducerTest],
+        });
+        expect(spy.mock.calls[0][0]).toMatch(
+            /Multiple Reducers being the same is not recommended/
+        );
+        spy.mockClear();
+        console.error = preSpy;
+    });
+
     it("reducer is null and number", () => {
         let create = new moreCreateStore();
 

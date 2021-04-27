@@ -6,8 +6,8 @@ export default function replaceReducer<T, F extends keyof T>(
     reducersMap: Map<any, any>
 ) {
     return function (
-        reducerFun: ReducerFun<T, F>,
-        newReducerFun: ReducerFun<T, F>,
+        reducerFun: ReducerFun<T, T[F]>,
+        newReducerFun: ReducerFun<T, T[F]>,
         storeKey?: F
     ) {
         if (!isFunctionFn(newReducerFun)) {
@@ -16,7 +16,7 @@ export default function replaceReducer<T, F extends keyof T>(
         let key = storeKey || Config.ReducerDefault;
         let reducers = reducersMap.get(key);
         if (!reducers) {
-            throw new Error("You must specify a store");
+            throw new Error("You must specify a store.");
         }
         let isReplace = false;
         if (!Array.isArray(reducers)) {

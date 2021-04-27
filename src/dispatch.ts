@@ -6,11 +6,15 @@ function createDispatch<T>(
     reducersMap: Map<any, any>,
     enhancer?: (dispatch: DispatchFun<T>) => DispatchFun<T>
 ) {
-    let dispatch = function (action: AnyAction, storeKey?: keyof T) {
+    let dispatch: DispatchFun<T> = function (
+        action: AnyAction,
+        storeKey?: keyof T
+    ) {
         if (Config.isDispatching) {
             throw new Error("Reducers may not dispatch actions.");
         }
         let key = storeKey || Config.ReducerDefault;
+
         let currentReducers = reducersMap.get(key);
 
         if (!currentReducers) {
@@ -44,11 +48,10 @@ function createDispatch<T>(
                     "You must ensure that the Reducer returns the modified store"
                 );
             }
-
-            Config.isDispatching = false;
         } catch (rej) {
             throw new Error(rej);
         } finally {
+            Config.isDispatching = false;
             emitListeners(key);
         }
 

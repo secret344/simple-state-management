@@ -6,7 +6,4 @@ if (process.env.NODE_ENV !== "production") {
         'You are currently using minified code outside of NODE_ENV === "production". '
     );
 }
-let window = {};
-window["create"] = createStore;
-window["applyMiddleware"] = applyMiddleware;
 export { createStore, applyMiddleware };

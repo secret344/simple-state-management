@@ -10,7 +10,10 @@ export default function applyMiddleware<T>(middleware: Middleware<T>) {
         for (const key in middleware) {
             if (Object.prototype.hasOwnProperty.call(middleware, key)) {
                 // Not store state
-                const mw = middleware[key];
+                let mw = middleware[key];
+                if (!Array.isArray(mw)) {
+                    mw = [mw];
+                }
                 middle[key] = compose(...mw);
                 if (
                     process.env.NODE_ENV !== "production" &&
@@ -26,8 +29,7 @@ export default function applyMiddleware<T>(middleware: Middleware<T>) {
         dispatch = (action: Action, storeKey?: keyof T) => {
             let key = storeKey || (Config.ReducerDefault as keyof T);
             let patch = middle[key];
-
-            if (typeof patch === "function") {
+            if (patch && typeof patch === "function") {
                 return patch(fun)(action, key);
             }
             return fun(action, storeKey);

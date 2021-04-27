@@ -48,6 +48,30 @@ export function createReducerTest(
             return state;
     }
 }
+export function replaceReducerTest(
+    state: ReducerOneStore,
+    action: TodoReducerStoreAction
+) {
+    switch (action.type) {
+        case CHANGE_TEXT:
+            state.x = state.x + action.text;
+            return state;
+        default:
+            return state;
+    }
+}
+export function createReducerTestNotReturn(
+    state: ReducerOneStore,
+    action: TodoReducerStoreAction
+) {
+    switch (action.type) {
+        case CHANGE_TEXT:
+            state.x = action.text;
+            break;
+        default:
+            break;
+    }
+}
 export interface TodoReducerStoreActionNumber {
     type: string;
     num?: 123;
