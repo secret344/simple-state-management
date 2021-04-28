@@ -2,8 +2,8 @@ import createReducerFun from "./createReduce";
 import createDispatch from "./dispatch";
 import setProxy from "./proxy";
 import replaceReducer from "./replaceReducer";
-import { EnhancerDispatch } from "./types/dispatch";
-import { AnyStore, Store } from "./types/store";
+import { EnhancerDispatch } from "./type/dispatch";
+import { AnyStore, Store } from "./type/store";
 import { isFunctionFn } from "./utils";
 
 export function createStore<T extends AnyStore>(

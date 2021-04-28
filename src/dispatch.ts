@@ -1,5 +1,5 @@
-import { DispatchFun, EnhancerDispatch } from "./types/dispatch";
-import { AnyAction } from "./types/interface";
+import { DispatchFun, EnhancerDispatch } from "./type/dispatch";
+import { AnyAction } from "./type/interface";
 import { isFunctionFn } from "./utils";
 import warning from "./utils/warning";
 function createDispatch<T>(

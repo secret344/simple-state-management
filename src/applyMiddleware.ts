@@ -1,5 +1,5 @@
-import { DispatchFun } from "./types/dispatch";
-import { Action, Middleware } from "./types/interface";
+import { DispatchFun } from "./type/dispatch";
+import { Action, Middleware } from "./type/interface";
 import compose from "./utils/compose";
 import warning from "./utils/warning";
 

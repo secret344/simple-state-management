@@ -1,4 +1,4 @@
-import { ReducerFun } from "./types/interface";
+import { ReducerFun } from "./type/interface";
 import { isFunctionFn } from "./utils";
 
 export default function replaceReducer<T>(reducersMap: Map<any, any>) {

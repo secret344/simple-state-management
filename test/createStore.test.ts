@@ -20,7 +20,7 @@ import {
     todosReverse,
 } from "./helpers/reducers";
 import { ERROR } from "./helpers/actionTypes";
-import { AnyStore } from "../src/types/store";
+import { AnyStore } from "../src/type/store";
 
 describe("createStore", () => {
     it("store data must be Object", () => {

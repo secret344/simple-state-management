@@ -1,8 +1,9 @@
 {
     "name": "statemanagement",
-    "version": "0.0.1",
-    "description": "",
+    "version": "0.1.0",
+    "description": "a simple state management library",
     "scripts": {
+        "clean": "rimraf lib dist es coverage types",
         "test": "jest",
         "test:watch": "yarn test -- --watch",
         "test:cov": "yarn test -- --coverage",
@@ -11,18 +12,29 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Zhao-Null/simple-state-management.git"
+        "url": "git+https://github.com/secret344/simple-state-management.git"
     },
-    "author": "",
+    "author": "secret344 (https://github.com/secret344)",
     "main": "lib/SMU.js",
     "module": "es/SMU.js",
     "types": "types/index.d.ts",
     "unpkg": "dist/SMU.js",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/Zhao-Null/simple-state-management/issues"
+        "url": "https://github.com/secret344/simple-state-management/issues"
     },
-    "homepage": "https://github.com/Zhao-Null/simple-state-management#readme",
+    "keywords": [
+        "reducer",
+        "state",
+        "predictable",
+        "functional",
+        "immutable",
+        "hot",
+        "live",
+        "replay",
+        "flux"
+    ],
+    "homepage": "https://github.com/secret344/simple-state-management#readme",
     "dependencies": {},
     "devDependencies": {
         "@babel/core": "^7.13.16",

@@ -1,4 +1,4 @@
-import { ReducerFunObj, ReducerFun } from "./types/interface";
+import { ReducerFunObj, ReducerFun } from "./type/interface";
 import warning from "./utils/warning";
 
 export default function createReducerFun<T>() {
