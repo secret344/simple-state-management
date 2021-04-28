@@ -4,3 +4,5 @@
 
 ## 使用参考 examples
 ## 修改完毕后会补充README.md
+使用方式
+> npm install ssmutil
