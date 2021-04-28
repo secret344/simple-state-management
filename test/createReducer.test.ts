@@ -1,7 +1,6 @@
 import createReducerFun from "../src/createReduce";
-import { createStore } from "../src/createStore";
+import { createStore } from "../src";
 import { changeNum, changeText } from "./helpers/actionCreators";
-import { moreCreateStore } from "./helpers/morecreatestore";
 import { createReducerTest, createReducerTestNumber } from "./helpers/reducers";
 import { reducerStore, reducerStoreProto } from "./helpers/store";
 
@@ -19,9 +18,7 @@ describe("createReducer", () => {
         );
     });
     it("reducer is array", () => {
-        let create = new moreCreateStore();
-
-        const store = (create.createStore as typeof createStore)(reducerStore);
+        const store = createStore(reducerStore);
         store.createReducer([createReducerTest], "a");
 
         store.dispatch(changeText("world"));
@@ -35,9 +32,7 @@ describe("createReducer", () => {
         store.createReducer([createReducerTestNumber], "b");
     });
     it("reducer is Object", () => {
-        let create = new moreCreateStore();
-
-        const store = (create.createStore as typeof createStore)(reducerStore);
+        const store = createStore(reducerStore);
         store.createReducer({
             a: [createReducerTest],
             b: [createReducerTestNumber],
@@ -58,11 +53,7 @@ describe("createReducer", () => {
     });
 
     it("The reducer contains inherited attributes", () => {
-        let create = new moreCreateStore();
-
-        const store = (create.createStore as typeof createStore)(
-            reducerStoreProto()
-        );
+        const store = createStore(reducerStoreProto());
         store.createReducer({
             a: [createReducerTest],
             b: [createReducerTestNumber],
@@ -79,9 +70,9 @@ describe("createReducer", () => {
     });
 
     it("The reducer is set multiple times to the same", () => {
-        const preSpy = console.error;
+        const preSpy = console.warn;
         const spy = jest.fn();
-        console.error = spy;
+        console.warn = spy;
         let c = createReducerFun();
         c.createReducer({
             a: [createReducerTest, createReducerTest],
@@ -90,13 +81,11 @@ describe("createReducer", () => {
             /Multiple Reducers being the same is not recommended/
         );
         spy.mockClear();
-        console.error = preSpy;
+        console.warn = preSpy;
     });
 
     it("reducer is null and number", () => {
-        let create = new moreCreateStore();
-
-        const store = (create.createStore as typeof createStore)(reducerStore);
+        const store = createStore(reducerStore);
         expect(() => store.createReducer(123 as any)).toThrowError(
             "The type Reducers must be Object or Function or Array<Function>"
         );

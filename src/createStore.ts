@@ -2,28 +2,17 @@ import createReducerFun from "./createReduce";
 import createDispatch from "./dispatch";
 import setProxy from "./proxy";
 import replaceReducer from "./replaceReducer";
-import { AnyStore, DispatchFun } from "./types/interface";
+import { EnhancerDispatch } from "./types/dispatch";
+import { AnyStore, Store } from "./types/store";
 import { isFunctionFn } from "./utils";
-
-export const Config = {
-    isDispatching: false,
-    ReducerDefault: "",
-};
-export const store = {
-    currentState: null,
-    nextListeners: new Map(),
-};
 
 export function createStore<T extends AnyStore>(
     state: T,
     options?: {
         defaultKeyIndex?: number;
-        enhancerDispatch?: (dispatch: DispatchFun<T>) => DispatchFun<T>;
+        enhancerDispatch?: EnhancerDispatch<T>;
     }
-) {
-    if (this.isMount) {
-        throw new Error("You cannot create a repository multiple times");
-    }
+): Store<T> {
     if (typeof state !== "object" || state === null || isFunctionFn(state)) {
         throw new Error("Store must be an object");
     }
@@ -48,30 +37,31 @@ export function createStore<T extends AnyStore>(
     if (idx === 0) {
         throw new Error("There's no data. store:" + state);
     }
-    Config.ReducerDefault = defaultKey;
-    store.currentState = setProxy(p) as T;
-    this.isMount = true;
+    this.isDispatching = false;
+    this.nextListeners = new Map();
+    this.ReducerDefault = defaultKey;
+    this.currentState = setProxy.call(this, p) as T;
     function subscribe(listener: () => void, key?: string) {
         if (!isFunctionFn(listener)) {
             throw new Error("Expected the listener to be a function.");
         }
         let isSubscribed = true;
-        key = key || Config.ReducerDefault;
-        let nextListeners = store.nextListeners;
+        key = key || this.ReducerDefault;
+        let nextListeners = this.nextListeners;
         let stateListeners = nextListeners.get(key);
 
         if (Array.isArray(stateListeners)) {
             stateListeners.push(listener);
         } else {
-            store.nextListeners.set(key, [listener]);
+            this.nextListeners.set(key, [listener]);
             stateListeners = nextListeners.get(key);
         }
-
+        let _this = this;
         return function unsubscribe() {
             if (!isSubscribed) {
                 return;
             }
-            if (Config.isDispatching) {
+            if (_this.isDispatching) {
                 throw new Error(
                     "You may not unsubscribe from a store listener while the reducer is executing."
                 );
@@ -83,8 +73,8 @@ export function createStore<T extends AnyStore>(
     }
 
     function getStateCut<F extends keyof T>(key?: F): T[F] {
-        let k = key || Config.ReducerDefault;
-        let currentState = store.currentState;
+        let k = key || this.ReducerDefault;
+        let currentState = this.currentState;
         if (k) {
             currentState = currentState[k];
         }
@@ -96,13 +86,14 @@ export function createStore<T extends AnyStore>(
     }
     let createReducer = createReducerFun<T>();
     return {
-        subscribe,
-        getStateCut,
+        subscribe: subscribe.bind(this),
+        getStateCut: getStateCut.bind(this),
         dispatch: createDispatch<T>(
+            this,
             createReducer.reducersMap,
             options && options.enhancerDispatch
         ),
-        createReducer: createReducer.createReducer,
-        replaceReducer: replaceReducer<T>(createReducer.reducersMap),
+        createReducer: createReducer.createReducer.bind(this),
+        replaceReducer: replaceReducer<T>(createReducer.reducersMap).bind(this),
     };
 }

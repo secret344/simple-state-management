@@ -3,3 +3,13 @@ node_modules
 dist
 
 .cache
+
+/types
+
+es
+# 
+lib
+
+coverage
+
+iife

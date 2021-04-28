@@ -1,6 +1,6 @@
-import { createStore } from "../src/createStore";
+import { createStore } from "../src";
 import { changeText } from "./helpers/actionCreators";
-import { moreCreateStore } from "./helpers/morecreatestore";
+
 import {
     createReducerTest,
     createReducerTestNotReturn,
@@ -22,8 +22,7 @@ describe("dispatch", () => {
         );
     });
     it("Reducers may not dispatch actions.", () => {
-        let create = new moreCreateStore();
-        const store = create.createStore(reducerStore, { defaultKeyIndex: 3 });
+        const store = createStore(reducerStore, { defaultKeyIndex: 3 });
         store.createReducer((action: any, key?: any) => {
             store.dispatch(changeText("world"));
             createReducerTest(action, key);
@@ -33,48 +32,44 @@ describe("dispatch", () => {
         );
     });
     it("Set store data when not dispatching", () => {
-        let create = new moreCreateStore();
         // 123
-        const store = create.createStore(reducerStore, { defaultKeyIndex: 3 });
+        const store = createStore(reducerStore, { defaultKeyIndex: 3 });
         store.createReducer(createReducerTest);
         let state = store.getStateCut("b");
         state = 666;
         expect(store.getStateCut("b")).toEqual(123);
     });
     it("Set store data when not dispatching", () => {
-        let create = new moreCreateStore();
         // 123
-        const store = create.createStore(reducerStore, { defaultKeyIndex: 3 });
+        const store = createStore(reducerStore, { defaultKeyIndex: 3 });
         let state = store.getStateCut("a");
         expect(() => (state.x = "666")).toThrowError(
             "Do not modify the internal values of the repository externally."
         );
     });
     it("There is no Reducer", () => {
-        let create = new moreCreateStore();
-        const store = create.createStore(reducerStore);
+        const store = createStore(reducerStore);
         expect(() => store.dispatch(changeText("world"))).toThrowError(
             "You must call Dispatch after setting the Reducers"
         );
     });
     it("The Reducer does not return a value", () => {
-        const preSpy = console.error;
+        const preSpy = console.warn;
         const spy = jest.fn();
-        console.error = spy;
-        let create = new moreCreateStore();
-        const store = create.createStore(reducerStore);
+        console.warn = spy;
+
+        const store = createStore(reducerStore);
         store.createReducer(createReducerTestNotReturn);
         store.dispatch(changeText("world"));
         expect(spy.mock.calls[0][0]).toMatch(
             /You must ensure that the Reducer returns the modified store/
         );
         spy.mockClear();
-        console.error = preSpy;
+        console.warn = preSpy;
     });
     it("enhancerDispatch is not a function", () => {
-        let create = new moreCreateStore();
         expect(() =>
-            create.createStore(reducerStore, {
+            createStore(reducerStore, {
                 enhancerDispatch: 123 as any,
             })
         ).toThrowError("Expected the enhancer to be a function.");
