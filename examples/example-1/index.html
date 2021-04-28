@@ -43,13 +43,16 @@
                 }, (next) => (action, key) => {
                     console.log("我是中间件2号");
                     next(action, key)
-                    console.log("我是中间件2号,我完事了", store.getStateCut(), storeData);
+                    console.log("我是中间件2号,我完事了");
+                }, (next) => (action, key) => {
+                    console.log("我是中间件3号");
+                    next(action, key)
+                    console.log("我是中间件3号,我完事了", store.getStateCut(), storeData);
                 }]
             })
         })
         store.createReducer(counter)
         var valueEl = document.getElementById('value')
-
         function render() {
             console.log("触发了subscribe更新页面");
             valueEl.innerHTML = store.getStateCut().count.toString()
