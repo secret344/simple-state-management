@@ -41,6 +41,12 @@ export function createStore<T extends AnyStore>(
     const ReducerDefault: keyof T = defaultKey;
     const currentState = setProxy(p) as T;
     const reducersMap = new Map();
+    /**
+     * subscribe
+     * @param listener  
+     * @param key 
+     * @returns 
+     */
     function subscribe(listener: () => void, key?: keyof T) {
         if (!isFunctionFn(listener)) {
             throw new Error("Expected the listener to be a function.");

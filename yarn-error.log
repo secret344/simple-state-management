@@ -1,35 +1,35 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add *
+  C:\Program Files\nodejs\node.exe C:\Users\ADMIN\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add *
 
 PATH: 
-  C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\Docker\Docker\Resources\bin;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\130\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\130\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\Client SDK\ODBC\130\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\130\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\130\Tools\Binn\ManagementStudio\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;E:\backup\AOMEI Backupper;E:\nvm;C:\Program Files\nodejs;C:\Program Files (x86)\Yarn\bin\;C:\Users\app\AppData\Roaming\npm\bin\;C:\Users\app\AppData\Local\Programs\Python\Python36\Scripts\;C:\Users\app\AppData\Local\Programs\Python\Python36\;C:\Users\app\.cargo\bin;C:\Program Files\MySQL\MySQL Server 5.7\bin\;E:\nvm;C:\Program Files\nodejs;E:\Microsoft VS Code\bin;C:\Users\app\AppData\Local\BypassRuntm;C:\Users\app\AppData\Roaming\npm\bin\;C:\Users\app\.deno\bin;E:\mingw\bin;C:\Users\app\.dotnet\tools;%USERPROFILE%\AppData\Local\Microsoft\WindowsApps;
+  C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files (x86)\NetSarang\Xftp 7\;C:\Program Files (x86)\NetSarang\Xshell 7\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Users\ADMIN\.cargo\bin;C:\Users\ADMIN\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Bandizip\;C:\Users\ADMIN\AppData\Roaming\npm;C:\web-files\Microsoft VS Code\bin;C:\Users\ADMIN\.deno\bin;D:\v8\depot_tools;C:\Users\ADMIN\.dotnet\tools
 
 Yarn version: 
-  1.13.0
+  1.22.10
 
 Node version: 
-  10.16.0
+  10.16.3
 
 Platform: 
   win32 x64
 
 Trace: 
-  Error: https://registry.npmjs.org/*: Not found
-      at Request.params.callback [as _callback] (C:\Program Files (x86)\Yarn\lib\cli.js:65364:18)
-      at Request.self.callback (C:\Program Files (x86)\Yarn\lib\cli.js:129397:22)
+  Error: https://registry.yarnpkg.com/*: Not found
+      at Request.params.callback [as _callback] (C:\Users\ADMIN\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66988:18)
+      at Request.self.callback (C:\Users\ADMIN\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140662:22)
       at Request.emit (events.js:198:13)
-      at Request.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:130369:10)
+      at Request.<anonymous> (C:\Users\ADMIN\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141634:10)
       at Request.emit (events.js:198:13)
-      at IncomingMessage.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:130291:12)
+      at IncomingMessage.<anonymous> (C:\Users\ADMIN\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141556:12)
       at Object.onceWrapper (events.js:286:20)
       at IncomingMessage.emit (events.js:203:15)
-      at endReadableNT (_stream_readable.js:1129:12)
+      at endReadableNT (_stream_readable.js:1145:12)
       at process._tickCallback (internal/process/next_tick.js:63:19)
 
 npm manifest: 
   {
       "name": "ssmutil",
-      "version": "0.1.2",
+      "version": "0.1.5",
       "description": "a simple state management library",
       "scripts": {
           "clean": "rimraf lib dist es coverage types",
