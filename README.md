@@ -49,7 +49,7 @@ ssmutil.createStore(store);
     ```
 3. createStore 返回一个对象，我们将在下面介绍。
 
-#### getStateCut
+#### 1) getStateCut
 
 1. key 接收一个 key 值，将返回同名仓库的 state
 
@@ -60,7 +60,7 @@ let store = ssmutil.createStore({ a: 1 });
 store.getStateCut(); //返回1
 ```
 
-#### createReducer
+#### 2) createReducer
 
 创建 Reducer
 
@@ -74,7 +74,7 @@ let store = ssmutil.createStore({ a: 1 });
 store.createReducer((state,action)=> void)
 ```
 
-#### dispatch
+#### 3) dispatch
 
 1. dispatch 在使用之前必须创建相应的 reducer
 2. action 所要触发的 action
@@ -86,7 +86,7 @@ let store = ssmutil.createStore({ a: 1 });
 store.createReducer((state,action)=> void)
 ```
 
-#### subscribe
+#### 4) subscribe
 
 1. 第一个参数为函数，将在 dispatch 之后触发
 2. key 订阅同名仓库，将在 dispatch 时触发
@@ -96,7 +96,7 @@ let store = ssmutil.createStore({ a: 1 });
 store.subscribe(() => {});
 ```
 
-#### replaceReducer
+#### 5) replaceReducer
 
 1. 第一个参数为旧的 reducer
 2. 第二个参数为新的 reducer
