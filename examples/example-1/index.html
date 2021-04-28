@@ -21,7 +21,7 @@
     </div>
 
     <script>
-        let SMU = window.SMU
+        let SmUnit = window.SMU
         function counter(state, action) {
             switch (action.type) {
                 case 'INCREMENT':
@@ -34,8 +34,8 @@
             }
         }
         let storeData = { count: 1 }
-        let store = SMU.createStore({ storeData }, {
-            enhancerDispatch: SMU.applyMiddleware({
+        let store = SmUnit.createStore({ storeData }, {
+            enhancerDispatch: SmUnit.applyMiddleware({
                 storeData: [(next) => (action, key) => {
                     console.log("我是中间件1号", store.getStateCut(), storeData);
                     next(action, key)
