@@ -4,8 +4,8 @@
     "description": "",
     "scripts": {
         "test": "jest",
-        "test:watch": "npm test -- --watch",
-        "test:cov": "npm test -- --coverage",
+        "test:watch": "yarn test -- --watch",
+        "test:cov": "yarn test -- --coverage",
         "check-types": "tsc --noEmit",
         "build": "rollup -c"
     },
