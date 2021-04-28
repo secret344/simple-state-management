@@ -1,6 +1,6 @@
 {
     "name": "ssmutil",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "description": "a simple state management library",
     "scripts": {
         "clean": "rimraf lib dist es coverage types",
