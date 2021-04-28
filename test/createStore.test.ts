@@ -5,7 +5,7 @@ import {
     enhancerDispatchStoreNumData,
     reducerStore,
 } from "./helpers/store";
-import { createStore } from "../src";
+import ssmutil from "../src";
 import applyMiddleware from "../src/applyMiddleware";
 import { modeMiddleware } from "./helpers/middleware";
 import {
@@ -24,16 +24,16 @@ import { AnyStore } from "../src/type/store";
 
 describe("createStore", () => {
     it("store data must be Object", () => {
-        expect(() => createStore(undefined)).toThrowError("Store must be");
-        expect(() => createStore(("test" as unknown) as AnyStore)).toThrowError(
+        expect(() => ssmutil.createStore(undefined)).toThrowError("Store must be");
+        expect(() => ssmutil.createStore(("test" as unknown) as AnyStore)).toThrowError(
             "Store must be"
         );
-        expect(() => createStore({})).toThrowError("There's no data");
-        expect(() => createStore(null)).toThrowError("Store must be");
-        expect(() => createStore(() => {})).toThrowError("Store must be");
+        expect(() => ssmutil.createStore({})).toThrowError("There's no data");
+        expect(() => ssmutil.createStore(null)).toThrowError("Store must be");
+        expect(() => ssmutil.createStore(() => {})).toThrowError("Store must be");
     });
     it("exposes the public API", () => {
-        const store = createStore({ storeData });
+        const store = ssmutil.createStore({ storeData });
         const methods = Object.keys(store);
 
         expect(methods.length).toBe(5);
@@ -45,12 +45,12 @@ describe("createStore", () => {
     });
 
     it("passes the initial state", () => {
-        const store = createStore({ storeData });
+        const store = ssmutil.createStore({ storeData });
         expect(store.getStateCut()).toEqual({});
     });
 
     it("applies the reducer to the previous state", () => {
-        const store = createStore({ storeNumData });
+        const store = ssmutil.createStore({ storeNumData });
         expect(store.getStateCut()).toEqual({ num: 0 });
         expect(store.getStateCut("storeNumData")).toEqual({ num: 0 });
         store.createReducer(todosReverse);
@@ -65,7 +65,7 @@ describe("createStore", () => {
     });
 
     it("supports multiple subscriptions", () => {
-        const store = createStore({ storeData });
+        const store = ssmutil.createStore({ storeData });
         store.createReducer(todosReverse);
 
         const listenerA = jest.fn();
@@ -112,7 +112,7 @@ describe("createStore", () => {
         expect(listenerB.mock.calls.length).toBe(2);
     });
     it("supports multiple subscriptions", () => {
-        const store = createStore({ storeData });
+        const store = ssmutil.createStore({ storeData });
         store.createReducer(todosReverse);
 
         const listenerA = jest.fn();
@@ -161,7 +161,7 @@ describe("createStore", () => {
     });
 
     it("options enhancerDispatch", () => {
-        const store = createStore(
+        const store = ssmutil.createStore(
             { enhancerDispatchStoreNumData },
             { enhancerDispatch: applyMiddleware(modeMiddleware()) }
         );
@@ -176,7 +176,7 @@ describe("createStore", () => {
         });
     });
     it("replaceReducers test", () => {
-        const store = createStore({ replaceStoreNumData });
+        const store = ssmutil.createStore({ replaceStoreNumData });
         expect(store.getStateCut()).toEqual({ num: 0 });
         expect(store.getStateCut("replaceStoreNumData")).toEqual({ num: 0 });
         store.createReducer(todosReverse);
@@ -199,7 +199,7 @@ describe("createStore", () => {
         expect(store.getStateCut("replaceStoreNumData")).toEqual({ num: 0 });
     });
     it("throws if replaceReducer is not a function", () => {
-        const store = createStore({ num: 1 });
+        const store = ssmutil.createStore({ num: 1 });
         store.createReducer(todosReverse);
 
         expect(() => store.replaceReducer(undefined, undefined)).toThrow(
@@ -207,7 +207,7 @@ describe("createStore", () => {
         );
     });
     it("throws if listener is not a function", () => {
-        const store = createStore({ b: 1 });
+        const store = ssmutil.createStore({ b: 1 });
 
         expect(() => store.subscribe(undefined)).toThrow();
 
@@ -218,7 +218,7 @@ describe("createStore", () => {
         expect(() => store.subscribe(undefined)).toThrow();
     });
     it("DefaultKeyIndex exceeds the number of stores", () => {
-        const store = createStore(reducerStore, { defaultKeyIndex: 3 });
+        const store = ssmutil.createStore(reducerStore, { defaultKeyIndex: 3 });
         store.createReducer(createReducerTest);
         store.dispatch(changeText("world"));
         expect(store.getStateCut()).toEqual({
@@ -227,7 +227,7 @@ describe("createStore", () => {
     });
     it("DefaultKeyIndex exceeds the number of stores", () => {
         const listenerA = jest.fn();
-        const store = createStore(reducerStore, { defaultKeyIndex: 3 });
+        const store = ssmutil.createStore(reducerStore, { defaultKeyIndex: 3 });
         let unsubscribeA = store.subscribe(listenerA);
         store.createReducer((action: any, key?: any) => {
             unsubscribeA();

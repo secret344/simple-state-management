@@ -1,4 +1,4 @@
-import { createStore } from "../src";
+import ssmutil from "../src";
 import { changeText } from "./helpers/actionCreators";
 
 import {
@@ -10,7 +10,7 @@ import { reducerStore } from "./helpers/store";
 
 describe("dispatch", () => {
     it("There is no Reducer", () => {
-        const store = createStore(reducerStore);
+        const store = ssmutil.createStore(reducerStore);
         store.createReducer(createReducerTest);
 
         store.dispatch(changeText("world"));
@@ -22,7 +22,7 @@ describe("dispatch", () => {
         );
     });
     it("Reducers may not dispatch actions.", () => {
-        const store = createStore(reducerStore, { defaultKeyIndex: 3 });
+        const store = ssmutil.createStore(reducerStore, { defaultKeyIndex: 3 });
         store.createReducer((action: any, key?: any) => {
             store.dispatch(changeText("world"));
             createReducerTest(action, key);
@@ -33,7 +33,7 @@ describe("dispatch", () => {
     });
     it("Set store data when not dispatching", () => {
         // 123
-        const store = createStore(reducerStore, { defaultKeyIndex: 3 });
+        const store = ssmutil.createStore(reducerStore, { defaultKeyIndex: 3 });
         store.createReducer(createReducerTest);
         let state = store.getStateCut("b");
         state = 666;
@@ -41,14 +41,14 @@ describe("dispatch", () => {
     });
     it("Set store data when not dispatching", () => {
         // 123
-        const store = createStore(reducerStore, { defaultKeyIndex: 3 });
+        const store = ssmutil.createStore(reducerStore, { defaultKeyIndex: 3 });
         let state = store.getStateCut("a");
         expect(() => (state.x = "666")).toThrowError(
             "Do not modify the internal values of the repository externally."
         );
     });
     it("There is no Reducer", () => {
-        const store = createStore(reducerStore);
+        const store = ssmutil.createStore(reducerStore);
         expect(() => store.dispatch(changeText("world"))).toThrowError(
             "You must call Dispatch after setting the Reducers"
         );
@@ -58,7 +58,7 @@ describe("dispatch", () => {
         const spy = jest.fn();
         console.warn = spy;
 
-        const store = createStore(reducerStore);
+        const store = ssmutil.createStore(reducerStore);
         store.createReducer(createReducerTestNotReturn);
         store.dispatch(changeText("world"));
         expect(spy.mock.calls[0][0]).toMatch(
@@ -69,7 +69,7 @@ describe("dispatch", () => {
     });
     it("enhancerDispatch is not a function", () => {
         expect(() =>
-            createStore(reducerStore, {
+            ssmutil.createStore(reducerStore, {
                 enhancerDispatch: 123 as any,
             })
         ).toThrowError("Expected the enhancer to be a function.");

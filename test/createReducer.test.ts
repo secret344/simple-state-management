@@ -1,12 +1,12 @@
 import createReducerFun from "../src/createReduce";
-import { createStore } from "../src";
+import ssmutil from "../src";
 import { changeNum, changeText } from "./helpers/actionCreators";
 import { createReducerTest, createReducerTestNumber } from "./helpers/reducers";
 import { reducerStore, reducerStoreProto } from "./helpers/store";
 
 describe("createReducer", () => {
     it("reducer is function", () => {
-        const store = createStore(reducerStore);
+        const store = ssmutil.createStore(reducerStore);
         store.createReducer(createReducerTest);
 
         store.dispatch(changeText("world"));
@@ -18,7 +18,7 @@ describe("createReducer", () => {
         );
     });
     it("reducer is array", () => {
-        const store = createStore(reducerStore);
+        const store = ssmutil.createStore(reducerStore);
         store.createReducer([createReducerTest], "a");
 
         store.dispatch(changeText("world"));
@@ -32,7 +32,7 @@ describe("createReducer", () => {
         store.createReducer([createReducerTestNumber], "b");
     });
     it("reducer is Object", () => {
-        const store = createStore(reducerStore);
+        const store = ssmutil.createStore(reducerStore);
         store.createReducer({
             a: [createReducerTest],
             b: [createReducerTestNumber],
@@ -53,7 +53,7 @@ describe("createReducer", () => {
     });
 
     it("The reducer contains inherited attributes", () => {
-        const store = createStore(reducerStoreProto());
+        const store = ssmutil.createStore(reducerStoreProto());
         store.createReducer({
             a: [createReducerTest],
             b: [createReducerTestNumber],
@@ -85,7 +85,7 @@ describe("createReducer", () => {
     });
 
     it("reducer is null and number", () => {
-        const store = createStore(reducerStore);
+        const store = ssmutil.createStore(reducerStore);
         expect(() => store.createReducer(123 as any)).toThrowError(
             "The type Reducers must be Object or Function or Array<Function>"
         );

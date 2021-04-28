@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="../../dist/SMU.js"></script>
+    <script src="../../dist/ssmutil.js"></script>
 </head>
 
 <body>
@@ -21,7 +21,7 @@
     </div>
 
     <script>
-        let SmUnit = window.SMU
+        let ssmutil = window.ssmutil
         function counter(state, action) {
             switch (action.type) {
                 case 'INCREMENT':
@@ -34,8 +34,8 @@
             }
         }
         let storeData = { count: 1 }
-        let store = SmUnit.createStore({ storeData }, {
-            enhancerDispatch: SmUnit.applyMiddleware({
+        let store = ssmutil.createStore({ storeData }, {
+            enhancerDispatch: ssmutil.applyMiddleware({
                 storeData: [(next) => (action, key) => {
                     console.log("我是中间件1号", store.getStateCut(), storeData);
                     next(action, key)

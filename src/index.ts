@@ -6,4 +6,4 @@ if (process.env.NODE_ENV !== "production") {
         'You are currently using minified code outside of NODE_ENV === "production".'
     );
 }
-export { createStore, applyMiddleware };
+export default { createStore, applyMiddleware };

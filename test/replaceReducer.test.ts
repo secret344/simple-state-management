@@ -1,4 +1,4 @@
-import { createStore } from "../src";
+import ssmutil from "../src";
 import replaceReducer from "../src/replaceReducer";
 import { changeText } from "./helpers/actionCreators";
 import {
@@ -17,13 +17,13 @@ describe("replaceReducer", () => {
         );
     });
     it("no store", () => {
-        const store = createStore(reducerStore, { defaultKeyIndex: 3 });
+        const store = ssmutil.createStore(reducerStore, { defaultKeyIndex: 3 });
         expect(() =>
             store.replaceReducer(1 as any, replaceTodosReverse as any)
         ).toThrowError("You must specify a store.");
     });
     it("When the reducer is the array is the replacement", () => {
-        const store = createStore(reducerStore, { defaultKeyIndex: 3 });
+        const store = ssmutil.createStore(reducerStore, { defaultKeyIndex: 3 });
         store.createReducer([createReducerTest], "a");
         store.replaceReducer(createReducerTest, replaceReducerTest, "a");
         store.dispatch(changeText("world"));
@@ -32,7 +32,7 @@ describe("replaceReducer", () => {
         });
     });
     it("When the reducer is the array is the replacement", () => {
-        const store = createStore(reducerStore, { defaultKeyIndex: 3 });
+        const store = ssmutil.createStore(reducerStore, { defaultKeyIndex: 3 });
         store.createReducer([createReducerTest], "a");
         expect(() =>
             store.replaceReducer(
