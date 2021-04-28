@@ -28,10 +28,11 @@ Trace:
 
 npm manifest: 
   {
-      "name": "statemanagement",
-      "version": "0.0.1",
-      "description": "",
+      "name": "ssmutil",
+      "version": "0.1.1",
+      "description": "a simple state management library",
       "scripts": {
+          "clean": "rimraf lib dist es coverage types",
           "test": "jest",
           "test:watch": "yarn test -- --watch",
           "test:cov": "yarn test -- --coverage",
@@ -40,18 +41,29 @@ npm manifest:
       },
       "repository": {
           "type": "git",
-          "url": "git+https://github.com/Zhao-Null/simple-state-management.git"
+          "url": "git+https://github.com/secret344/simple-state-management.git"
       },
-      "author": "",
-      "main": "lib/SMU.js",
-      "module": "es/SMU.js",
+      "author": "secret344 (https://github.com/secret344)",
+      "main": "lib/ssmutil.js",
+      "module": "es/ssmutil.js",
       "types": "types/index.d.ts",
-      "unpkg": "dist/SMU.js",
+      "unpkg": "dist/ssmutil.js",
       "license": "MIT",
       "bugs": {
-          "url": "https://github.com/Zhao-Null/simple-state-management/issues"
+          "url": "https://github.com/secret344/simple-state-management/issues"
       },
-      "homepage": "https://github.com/Zhao-Null/simple-state-management#readme",
+      "keywords": [
+          "reducer",
+          "state",
+          "predictable",
+          "functional",
+          "immutable",
+          "hot",
+          "live",
+          "replay",
+          "flux"
+      ],
+      "homepage": "https://github.com/secret344/simple-state-management#readme",
       "dependencies": {},
       "devDependencies": {
           "@babel/core": "^7.13.16",

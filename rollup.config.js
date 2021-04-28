@@ -18,7 +18,7 @@ export default [
     // CommonJS
     {
         input: "src/index.ts",
-        output: { file: "lib/SMU.js", format: "cjs", indent: false },
+        output: { file: "lib/ssmutil.js", format: "cjs", indent: false },
         external: makeExternalPredicate([
             ...Object.keys(pkg.dependencies || {}),
             ...Object.keys(pkg.peerDependencies || {}),
@@ -35,7 +35,7 @@ export default [
     // es
     {
         input: "src/index.ts",
-        output: { file: "es/SMU.js", format: "es", indent: false },
+        output: { file: "es/ssmutil.js", format: "es", indent: false },
         external: makeExternalPredicate([
             ...Object.keys(pkg.dependencies || {}),
             ...Object.keys(pkg.peerDependencies || {}),
@@ -52,7 +52,7 @@ export default [
     // ES for Browsers
     {
         input: "src/index.ts",
-        output: { file: "es/SMU.mjs", format: "es", indent: false },
+        output: { file: "es/ssmutil.mjs", format: "es", indent: false },
         plugins: [
             nodeResolve({
                 extensions,
@@ -79,9 +79,9 @@ export default [
     {
         input: "src/index.ts",
         output: {
-            file: "dist/SMU.js",
+            file: "dist/ssmutil.js",
             format: "umd",
-            name: "SMU",
+            name: "ssmutil",
             indent: false,
         },
         plugins: [
@@ -102,9 +102,9 @@ export default [
     {
         input: "src/index.ts",
         output: {
-            file: "dist/SMU.min.js",
+            file: "dist/ssmutil.min.js",
             format: "umd",
-            name: "SMU",
+            name: "ssmutil",
             indent: false,
         },
         plugins: [
