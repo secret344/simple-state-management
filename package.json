@@ -1,5 +1,5 @@
 {
-    "name": "statemanagement",
+    "name": "ssmutil",
     "version": "0.1.0",
     "description": "a simple state management library",
     "scripts": {
