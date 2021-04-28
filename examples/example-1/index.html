@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Redux basic example</title>
-    <script src="../../index.ts"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../dist/SMU.js"></script>
 </head>
 
 <body>
@@ -16,9 +19,10 @@
             <button id="incrementAsync">Increment async</button>
         </p>
     </div>
-    <script>
-        function counter(state, action) {
 
+    <script>
+        let SMU = window.SMU
+        function counter(state, action) {
             switch (action.type) {
                 case 'INCREMENT':
                     state.count += 1
@@ -30,14 +34,16 @@
             }
         }
         let storeData = { count: 1 }
-        let store = window.create({ storeData }, {
-            enhancerDispatch: window.applyMiddleware({
+        let store = SMU.createStore({ storeData }, {
+            enhancerDispatch: SMU.applyMiddleware({
                 storeData: [(next) => (action, key) => {
                     console.log("我是中间件1号", store.getStateCut(), storeData);
                     next(action, key)
+                    console.log("我是中间件1号,我完事了");
                 }, (next) => (action, key) => {
                     console.log("我是中间件2号");
                     next(action, key)
+                    console.log("我是中间件2号,我完事了", store.getStateCut(), storeData);
                 }]
             })
         })
@@ -45,6 +51,7 @@
         var valueEl = document.getElementById('value')
 
         function render() {
+            console.log("触发了subscribe更新页面");
             valueEl.innerHTML = store.getStateCut().count.toString()
         }
 
@@ -53,7 +60,7 @@
 
         document.getElementById('increment')
             .addEventListener('click', function () {
-                store.dispatch({ type: 'INCREMENT' })
+                store.dispatch({ type: 'INCREMENT' }, "storeData")
             })
 
         document.getElementById('decrement')

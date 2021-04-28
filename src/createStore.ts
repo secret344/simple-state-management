@@ -2,16 +2,17 @@ import createReducerFun from "./createReduce";
 import createDispatch from "./dispatch";
 import setProxy from "./proxy";
 import replaceReducer from "./replaceReducer";
-import { AnyStore, DispatchFun } from "./types/interface";
+import { EnhancerDispatch } from "./types/dispatch";
+import { AnyStore, Store } from "./types/store";
 import { isFunctionFn } from "./utils";
 
 export function createStore<T extends AnyStore>(
     state: T,
     options?: {
         defaultKeyIndex?: number;
-        enhancerDispatch?: (dispatch: DispatchFun<T>) => DispatchFun<T>;
+        enhancerDispatch?: EnhancerDispatch<T>;
     }
-) {
+): Store<T> {
     if (typeof state !== "object" || state === null || isFunctionFn(state)) {
         throw new Error("Store must be an object");
     }

@@ -1,4 +1,5 @@
-import { Action, DispatchFun, Middleware } from "./types/interface";
+import { DispatchFun } from "./types/dispatch";
+import { Action, Middleware } from "./types/interface";
 import compose from "./utils/compose";
 import warning from "./utils/warning";
 

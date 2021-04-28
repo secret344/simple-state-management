@@ -7,6 +7,7 @@ module.exports = {
         "!**/node_modules/**",
         "!**/helpers/**",
         "!**/src/index.ts",
-        "!**/types/**"
+        "!**/warning.ts",
+        "!**/types/**",
     ],
 };

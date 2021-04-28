@@ -1,10 +1,11 @@
-import { AnyAction, DispatchFun } from "./types/interface";
+import { DispatchFun, EnhancerDispatch } from "./types/dispatch";
+import { AnyAction } from "./types/interface";
 import { isFunctionFn } from "./utils";
 import warning from "./utils/warning";
 function createDispatch<T>(
     _this,
     reducersMap: Map<any, any>,
-    enhancer?: (dispatch: DispatchFun<T>) => DispatchFun<T>
+    enhancer?: EnhancerDispatch<T>
 ) {
     let dispatch: DispatchFun<T> = function (
         action: AnyAction,

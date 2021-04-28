@@ -70,9 +70,9 @@ describe("createReducer", () => {
     });
 
     it("The reducer is set multiple times to the same", () => {
-        const preSpy = console.error;
+        const preSpy = console.warn;
         const spy = jest.fn();
-        console.error = spy;
+        console.warn = spy;
         let c = createReducerFun();
         c.createReducer({
             a: [createReducerTest, createReducerTest],
@@ -81,7 +81,7 @@ describe("createReducer", () => {
             /Multiple Reducers being the same is not recommended/
         );
         spy.mockClear();
-        console.error = preSpy;
+        console.warn = preSpy;
     });
 
     it("reducer is null and number", () => {

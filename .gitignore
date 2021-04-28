@@ -4,10 +4,12 @@ dist
 
 .cache
 
-types
+/types
 
 es
-
+# 
 lib
 
 coverage
+
+iife

@@ -8,7 +8,6 @@ import {
 import { createStore } from "../src";
 import applyMiddleware from "../src/applyMiddleware";
 import { modeMiddleware } from "./helpers/middleware";
-import { AnyStore } from "../src/types/interface";
 import {
     addnum,
     addnumReturnNewState,
@@ -21,6 +20,7 @@ import {
     todosReverse,
 } from "./helpers/reducers";
 import { ERROR } from "./helpers/actionTypes";
+import { AnyStore } from "../src/types/store";
 
 describe("createStore", () => {
     it("store data must be Object", () => {

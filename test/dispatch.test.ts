@@ -54,9 +54,9 @@ describe("dispatch", () => {
         );
     });
     it("The Reducer does not return a value", () => {
-        const preSpy = console.error;
+        const preSpy = console.warn;
         const spy = jest.fn();
-        console.error = spy;
+        console.warn = spy;
 
         const store = createStore(reducerStore);
         store.createReducer(createReducerTestNotReturn);
@@ -65,7 +65,7 @@ describe("dispatch", () => {
             /You must ensure that the Reducer returns the modified store/
         );
         spy.mockClear();
-        console.error = preSpy;
+        console.warn = preSpy;
     });
     it("enhancerDispatch is not a function", () => {
         expect(() =>

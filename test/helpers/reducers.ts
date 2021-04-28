@@ -9,7 +9,7 @@ import { ReducerOneStore } from "./store";
 export interface Todo {
     num: number;
 }
-export type TodoAction = { type: "ADD_NUM" | "ADD_NUM_RETURN"; num?: number };
+export type TodoAction = { type: "ADD_NUM" | "ADD_NUM_RETURN"; num: number };
 export function todosReverse(state: Todo, action: TodoAction) {
     switch (action.type) {
         case ADD_NUM:
@@ -34,7 +34,7 @@ export function replaceTodosReverse(state: Todo, action: TodoAction) {
 }
 export interface TodoReducerStoreAction {
     type: string;
-    text?: string;
+    text: string;
 }
 export function createReducerTest(
     state: ReducerOneStore,
@@ -74,7 +74,7 @@ export function createReducerTestNotReturn(
 }
 export interface TodoReducerStoreActionNumber {
     type: string;
-    num?: 123;
+    num: number;
 }
 export function createReducerTestNumber(
     state: number,
