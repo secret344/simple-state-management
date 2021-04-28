@@ -7,7 +7,7 @@ function createDispatch<T>(
     reducersMap: Map<any, any>,
     enhancer?: EnhancerDispatch<T>
 ) {
-    let dispatch: DispatchFun<T> = function (
+    let dispatch: DispatchFun<keyof T> = function (
         action: AnyAction,
         storeKey?: keyof T
     ) {

@@ -4,7 +4,7 @@ import compose from "./utils/compose";
 import warning from "./utils/warning";
 
 export default function applyMiddleware<T>(middleware: Middleware<T>) {
-    return function (dispatch: DispatchFun<T>): DispatchFun<T> {
+    return function (dispatch: DispatchFun<keyof T>): DispatchFun<keyof T> {
         let fun = dispatch;
         let middle: any = {};
         for (const key in middleware) {

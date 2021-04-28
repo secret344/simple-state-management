@@ -14,7 +14,7 @@ export interface Unsubscribe {
 export interface Store<T = AnyStore> {
     subscribe(listener: () => void, key?: keyof T): Unsubscribe;
     getStateCut<F extends keyof T>(key?: F): T[F];
-    dispatch: DispatchFun<T>;
+    dispatch: DispatchFun<keyof T>;
     createReducer<K extends keyof T, A extends Action = AnyAction>(
         reducerFun: ReducerFun<T, T[K], A> | ReducerFunObj<T, K, any>
     );
