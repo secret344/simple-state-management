@@ -1,6 +1,6 @@
 {
     "name": "ssmutil",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "a simple state management library",
     "scripts": {
         "clean": "rimraf lib dist es coverage types",
@@ -20,6 +20,13 @@
     "types": "types/index.d.ts",
     "unpkg": "dist/ssmutil.js",
     "license": "MIT",
+    "files": [
+        "dist",
+        "lib",
+        "es",
+        "src",
+        "types"
+    ],
     "bugs": {
         "url": "https://github.com/secret344/simple-state-management/issues"
     },
