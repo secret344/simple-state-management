@@ -18,7 +18,7 @@ export function createStore<T extends AnyStore>(
 
     let p: T = { ...state };
     let idx = 0;
-    let defIndex = (options && options.defaultKeyIndex) || 0;
+    let defIndex = options ? options.defaultKeyIndex || 0 : 0;
     let defaultKey = "";
     for (const key in state) {
         if (Object.prototype.hasOwnProperty.call(state, key)) {
@@ -43,9 +43,9 @@ export function createStore<T extends AnyStore>(
     const reducersMap = new Map();
     /**
      * subscribe
-     * @param listener  
-     * @param key 
-     * @returns 
+     * @param listener
+     * @param key
+     * @returns
      */
     function subscribe(listener: () => void, key?: keyof T) {
         if (!isFunctionFn(listener)) {
@@ -101,8 +101,7 @@ export function createStore<T extends AnyStore>(
             set: function (target: any, key: any, value: any, receiver: any) {
                 if (!isDispatching) {
                     throw new Error(
-                        "Do not modify the internal values of the repository externally." +
-                            "all changes must be made sync"
+                        "Do not modify the internal values of the repository externally. all changes must be made sync"
                     );
                 }
                 const res = Reflect.set(target, key, value, receiver);
@@ -221,8 +220,7 @@ export function createStore<T extends AnyStore>(
             let action = reducersMap.get(key);
             if (action) {
                 throw new Error(
-                    "You cannot set the Reducer repeatedly" +
-                        "The duplicate key value is ---" +
+                    "You cannot set the Reducer repeatedly,The duplicate key value is ---" +
                         key
                 );
             }
@@ -230,12 +228,11 @@ export function createStore<T extends AnyStore>(
                 let m = [];
                 for (let i = 0; i < currentReducer.length; i++) {
                     const s = currentReducer[i];
-                    if (process .env.NODE_ENV !== "production") {
+                    if (process.env.NODE_ENV !== "production") {
                         let index = m.indexOf(s);
                         if (index >= 0) {
                             warning(
-                                "Multiple Reducers being the same is not recommended," +
-                                    "which would cause ReplacerEducer method replacement exceptions"
+                                "Multiple Reducers being the same is not recommended, which would cause ReplacerEducer method replacement exceptions"
                             );
                         }
                     }
