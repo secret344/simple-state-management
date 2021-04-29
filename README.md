@@ -1,7 +1,6 @@
 # simple-state-management
 
 ## 一个简单的状态管理库
-还不成熟......
 
 ## Installation
 
