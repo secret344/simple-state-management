@@ -21,12 +21,16 @@ npm install ssmutil
 import ssmutil from "ssmutil";
 let store = { store1: 1, store2: 2 };
 ssmutil.createStore(store);
+import {createStore} from "ssmutil";
+createStore(store)
 ```
 
 ```js
 import ssmutil from "ssmutil";
 let store = { store1: { a: 1 }, store2: { b: 2 } };
 ssmutil.createStore(store);
+import {createStore} from "ssmutil";
+createStore(store)
 ```
 
 2. 我们可以传入第二个参数去控制默认 store，以及增强 dispatch(内置了 applyMiddleware)
