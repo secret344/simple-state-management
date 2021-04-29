@@ -50,7 +50,7 @@ createStore(store)
         }
     );
     ```
-3. createStore 返回一个对象，我们将在下面介绍。
+3. createStore 返回的api，我们将在下面介绍。
 
 #### 1) getStateCut
 
